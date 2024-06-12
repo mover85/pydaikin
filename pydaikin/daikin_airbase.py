@@ -97,8 +97,8 @@ class DaikinAirBase(DaikinBRP069):
         No Outside Thermometor returns a '-' (Non Number).
         Return current outside temperature if available.
         """
-        value = self.values.get('otemp')
-        return self._parse_number('otemp') if value != '-' else None
+        value = self.values.get("otemp")
+        return self._parse_number("otemp") if value != "-" else None
 
     @property
     def support_zone_temperature(self):
@@ -241,7 +241,12 @@ class DaikinAirBase(DaikinBRP069):
         }
 
         if self.support_zone_temperature:
-            params.update({"lztemp_h": self.values["lztemp_h"]})
+            params.update(
+                {
+                    "lztemp_c": self.values["lztemp_c"],
+                    "lztemp_h": self.values["lztemp_h"],
+                }
+            )
 
         _LOGGER.debug("Sending request to %s with params: %s", path, params)
         await self._get_resource(path, params)
